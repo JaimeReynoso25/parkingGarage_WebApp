@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/parking_db
+    username: postgres
+    password: Whatpass21!31
+
+  jpa:
+    hibernate:
+      ddl-auto: update
