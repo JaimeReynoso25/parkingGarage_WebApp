@@ -33,6 +33,4 @@ public class AuthController {
             return "Invalid email or password";
         }
     }
-
-
 }
