@@ -1,5 +1,6 @@
 package com.jaime.parkingGarage.dto;
 
+// DTO for registering a user
 public class RegisterRequest {
 
     public RegisterRequest(String email, String password) {
