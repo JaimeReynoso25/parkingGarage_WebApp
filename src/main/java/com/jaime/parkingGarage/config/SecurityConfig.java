@@ -18,6 +18,7 @@ public class SecurityConfig {
                 // Define which endpoints are public vs protected
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll() // ✅ allow register/login
+                        .requestMatchers("/user/**").permitAll() // ✅ allow register/login
                         .anyRequest().authenticated()            // 🔒 everything else protected
                 );
 

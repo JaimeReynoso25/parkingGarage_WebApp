@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-// marks this as a service layer (business logic)
+// marks this as a service layer
 @Service
 public class UserService {
 

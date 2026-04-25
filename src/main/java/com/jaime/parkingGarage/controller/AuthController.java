@@ -1,4 +1,4 @@
-package com.jaime.parkingGarage.controllers;
+package com.jaime.parkingGarage.controller;
 
 import com.jaime.parkingGarage.config.JwtUtil;
 import com.jaime.parkingGarage.dto.LoginRequest;
