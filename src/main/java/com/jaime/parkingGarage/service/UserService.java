@@ -1,6 +1,5 @@
 package com.jaime.parkingGarage.service;
 
-import com.jaime.parkingGarage.config.JwtUtil;
 import com.jaime.parkingGarage.model.entity.User;
 import com.jaime.parkingGarage.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,12 +12,10 @@ import java.util.regex.Pattern;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final JwtUtil jwtUtil;
 
     // constructor injection (Spring automatically provides the repository)
-    public UserService(UserRepository userRepository, JwtUtil jwtUtil) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.jwtUtil = jwtUtil;
     }
 
     public String registerUser(String email, String password){
@@ -69,13 +66,7 @@ public class UserService {
                     .matches();
     }
 
-    public User addFunds(String token, double addedfunds){
-
-        // remove "Bearer " prefix from header
-        String cleanToken = token.substring(7);
-        
-        //extract email from JWT
-        String email = jwtUtil.extractEmail(cleanToken);
+    public User addFunds(String email, double addedfunds){
 
         //Find user in database by email
         User user = userRepository.findByEmail(email)
@@ -87,5 +78,4 @@ public class UserService {
         //save user to database
         return userRepository.save(user);
     }
-
 }
