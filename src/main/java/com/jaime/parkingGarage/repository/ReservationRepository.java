@@ -11,20 +11,22 @@ import java.util.UUID;
 public interface ReservationRepository extends JpaRepository<Reservation, UUID> {
 
     /*
-    SELECT r FROM Reservation r
-    WHERE r.spotId = :spotId
-    AND r.status != :status
-    AND r.startDate <= :endDate
-    AND r.endDate >= :startDate
+    Find conflicting reservations for a boat within a given date range.
+
+    SQL equivalent:
+    SELECT *
+    FROM reservation
+    WHERE boat_id = :boatId
+    AND status != :status
+    AND start_date <= :endDate
+    AND end_date >= :startDate;
      */
-    List<Reservation> findBySpotIdAndStatusNotAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-            String spotId,
+    List<Reservation> findByBoatIdAndStatusNotAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            UUID boatId,
             ReservationStatus status,
             LocalDate endDate,
             LocalDate startDate
     );
 
     List<Reservation> findByUserId(UUID userId);
-
-    List<Reservation> findByVehicleId(UUID vehicleId);
 }

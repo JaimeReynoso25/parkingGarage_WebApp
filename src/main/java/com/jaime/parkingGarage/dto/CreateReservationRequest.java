@@ -5,25 +5,21 @@ import java.util.UUID;
 
 public class CreateReservationRequest {
 
-    public UUID vehicleId;
-    public String spotId;
+    public UUID boatId;
     public LocalDate startDate;
     public LocalDate endDate;
 
-    public CreateReservationRequest(UUID vehicleId, String spotId, LocalDate startDate, LocalDate endDate) {
-        this.vehicleId = vehicleId;
-        this.spotId = spotId;
+    public CreateReservationRequest(UUID boatId, LocalDate startDate, LocalDate endDate) {
+        this.boatId = boatId;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public UUID getVehicleId() { return vehicleId; }
-    public String getSpotId() { return spotId; }
+    public UUID getBoatId() { return boatId; }
     public LocalDate getStartDate() { return startDate; }
     public LocalDate getEndDate() { return endDate; }
 
-    public void setVehicleId(UUID vehicleId) { this.vehicleId = vehicleId; }
-    public void setSpotId(String spotId) { this.spotId = spotId; }
+    public void setBoatId(UUID boatId) { this.boatId = boatId; }
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
     public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 }
