@@ -54,5 +54,4 @@ public class VehicleController {
 
         return vehicleService.getVehicles(userId);
     }
-
 }
