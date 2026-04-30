@@ -81,4 +81,37 @@ public class ReservationService {
         // 7. Save reservation
         return reservationRepository.save(reservation);
     }
+
+    public Reservation cancelReservation(UUID userId, UUID reservationId) {
+
+        // finds reservation
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new RuntimeException("Reservation not found"));
+
+        java.time.LocalDate today = java.time.LocalDate.now();
+
+        double refundRate;
+
+        // calculates refund amount
+        if (today.isBefore(reservation.getStartDate())) {
+            refundRate = 0.75;
+        } else if (today.isEqual(reservation.getStartDate())) {
+            refundRate = 0.50;
+        } else {
+            // after start date → allow cancel but no refund
+            refundRate = 0.0;
+        }
+
+        double refundAmount = reservation.getTotalCost() * refundRate;
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        user.setBalance(user.getBalance() + refundAmount);
+        userRepository.save(user);
+
+        reservation.setStatus(ReservationStatus.CANCELLED);
+
+        return reservationRepository.save(reservation);
+    }
 }

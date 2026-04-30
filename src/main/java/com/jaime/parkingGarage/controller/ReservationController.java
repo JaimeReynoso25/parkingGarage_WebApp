@@ -30,4 +30,16 @@ public class ReservationController {
 
         return reservationService.createReservation(userId, request);
     }
+
+    @PostMapping("/cancel/{reservationId}")
+    public Reservation cancelReservation(
+            @RequestHeader("Authorization") String token,
+            @RequestParam UUID reservationId
+    ) {
+        String cleanToken = token.substring(7);
+        UUID userId = jwtUtil.extractUserId(cleanToken);
+
+        return reservationService.cancelReservation(userId, reservationId);
+
+    }
 }
