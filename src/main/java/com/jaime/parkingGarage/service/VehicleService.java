@@ -6,6 +6,7 @@ import com.jaime.parkingGarage.repository.UserRepository;
 import com.jaime.parkingGarage.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -52,6 +53,10 @@ public class VehicleService {
 
         vehicleRepository.delete(vehicle);
 
+    }
+
+    public List<Vehicle> getVehicles(UUID userId) {
+        return vehicleRepository.findByUser_Id(userId);
     }
 
 }

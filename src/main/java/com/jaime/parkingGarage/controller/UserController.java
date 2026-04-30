@@ -22,10 +22,10 @@ public class UserController {
 
     @PostMapping("/addFunds")
     public User addFunds(
-            @RequestHeader("Authorization") String dirtyToken,
+            @RequestHeader("Authorization") String token,
             @RequestBody AddFundsRequest request)
     {
-        String cleanToken = dirtyToken.substring(7);
+        String cleanToken = token.substring(7);
         UUID userId = jwtUtil.extractUserId(cleanToken);
         return userService.addFunds(userId, request.getAmount());
     }

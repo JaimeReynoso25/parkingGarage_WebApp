@@ -9,6 +9,7 @@ import com.jaime.parkingGarage.service.VehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -44,6 +45,14 @@ public class VehicleController {
         UUID userId = jwtUtil.extractUserId(cleanToken);
 
         vehicleService.deleteVehicle(userId, request.getLicencePlate());
+    }
+
+    @GetMapping("/getVehicles")
+    public List<Vehicle> getVehicles(@RequestHeader("Authorization") String token) {
+        String cleanToken = token.substring(7);
+        UUID userId = jwtUtil.extractUserId(cleanToken);
+
+        return vehicleService.getVehicles(userId);
     }
 
 }

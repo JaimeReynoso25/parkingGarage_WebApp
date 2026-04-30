@@ -3,6 +3,7 @@ package com.jaime.parkingGarage.repository;
 import com.jaime.parkingGarage.model.entity.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -12,8 +13,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, UUID> {
     boolean existsBylicencePlate(String licencePlate);
 
     // sql query to delete a licencePlate
-    void deleteBylicencePlate(String licencePlate);
-
     Optional<Vehicle> findByLicencePlateAndUser_Id(String licencePlate, UUID userId);
 
+    // shows a list of all vehicles
+    List<Vehicle> findByUser_Id(UUID userId);
 }
