@@ -53,8 +53,6 @@ public class Vehicle {
         return licencePlate;
     }
 
-
-
     public void setLicencePlate(String licencePlate) {
         this.licencePlate = licencePlate;
     }

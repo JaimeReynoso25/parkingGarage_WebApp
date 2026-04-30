@@ -32,7 +32,7 @@ public class VehicleService {
             throw new IllegalArgumentException("licence plate already exists, please use a unique licence plate");
         }
 
-        //Find user in database by email
+        //Find user in database by id
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -42,10 +42,16 @@ public class VehicleService {
 
     public void deleteVehicle(UUID userId, String licencePlate){
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        if (licencePlate == null || licencePlate.isBlank()) {
+            throw new IllegalArgumentException("Licence plate is required");
+        }
 
-        vehicleRepository.deleteBylicencePlateAndUser_Id(licencePlate, user.getId());
+        Vehicle vehicle = vehicleRepository
+                .findByLicencePlateAndUser_Id(licencePlate, userId)
+                .orElseThrow(() -> new RuntimeException("Vehicle not found for this user"));
+
+        vehicleRepository.delete(vehicle);
+
     }
 
 }
