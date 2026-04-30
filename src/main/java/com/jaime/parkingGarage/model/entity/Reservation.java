@@ -16,7 +16,7 @@ public class Reservation {
     private UUID userId;
 
     @Column(nullable = false)
-    private UUID boatID;
+    private UUID boatId;
 
     @Column(nullable = false)
     private LocalDate startDate;
@@ -39,7 +39,7 @@ public class Reservation {
     public Reservation() {}
 
     public Reservation(UUID userId,
-                       UUID boatID,
+                       UUID boatId,
                        LocalDate startDate,
                        LocalDate endDate,
                        int totalDays,
@@ -47,7 +47,7 @@ public class Reservation {
                        ReservationStatus status) {
 
         this.userId = userId;
-        this.boatID = boatID;
+        this.boatId = boatId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalDays = totalDays;
@@ -62,8 +62,8 @@ public class Reservation {
     public UUID getUserId() { return userId; }
     public void setUserId(UUID userId) { this.userId = userId; }
 
-    public UUID getBoatId() { return boatID; }
-    public void setBoatId(UUID BoatID) { this.boatID = BoatID; }
+    public UUID getBoatId() { return boatId; }
+    public void setBoatId(UUID BoatID) { this.boatId = BoatID; }
 
     public LocalDate getStartDate() { return startDate; }
     public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
