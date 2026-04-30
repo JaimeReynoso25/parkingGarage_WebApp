@@ -27,5 +27,4 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
     List<Reservation> findByUserId(UUID userId);
 
     List<Reservation> findByVehicleId(UUID vehicleId);
-
 }
