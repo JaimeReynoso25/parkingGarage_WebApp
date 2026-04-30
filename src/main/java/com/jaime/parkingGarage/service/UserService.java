@@ -82,4 +82,10 @@ public class UserService {
         //save user to database
         return userRepository.save(user);
     }
+
+    public double getBalance(UUID userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"))
+                .getBalance();
+    }
 }

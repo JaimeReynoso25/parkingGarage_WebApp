@@ -57,4 +57,11 @@ public class UserController {
         UUID userId = jwtUtil.extractUserId(cleanToken);
         return userService.addFunds(userId, request.getAmount());
     }
+
+    @GetMapping("/balance")
+    public double getBalance(@RequestHeader("Authorization") String token) {
+        String cleanToken = token.substring(7);
+        UUID userId = jwtUtil.extractUserId(cleanToken);
+        return userService.getBalance(userId);
+    }
 }

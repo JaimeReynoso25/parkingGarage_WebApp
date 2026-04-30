@@ -6,12 +6,9 @@ import com.jaime.parkingGarage.model.entity.ReservationStatus;
 import com.jaime.parkingGarage.model.entity.User;
 import com.jaime.parkingGarage.repository.ReservationRepository;
 import com.jaime.parkingGarage.repository.UserRepository;
-import com.jaime.parkingGarage.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,17 +16,14 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
-    private final VehicleRepository vehicleRepository;
 
     public ReservationService(ReservationRepository reservationRepository,
-                              UserRepository userRepository,
-                              VehicleRepository vehicleRepository) {
+                              UserRepository userRepository) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
-        this.vehicleRepository = vehicleRepository;
     }
 
-    public Reservation createReservatiion(UUID userId, CreateReservationRequest request) {
+    public Reservation createReservation(UUID userId, CreateReservationRequest request) {
 
         // 1. Check spot availability (overlapping reservations)
         boolean spotTaken = !reservationRepository
