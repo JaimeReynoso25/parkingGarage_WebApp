@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.UUID;
 
 @Component
 public class JwtUtil {
@@ -29,29 +30,31 @@ public class JwtUtil {
     }
 
     //generate token after login
-    public String generateToken(String email) {
+    public String generateToken(UUID userID) {
         return Jwts.builder()
-                .setSubject(email)
+                .setSubject(userID.toString())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(key)
                 .compact();
     }
 
-    //extract email from token
-    public String extractEmail(String token) {
-        return Jwts.parserBuilder()
+    //extract userID from token
+    public UUID extractUserId(String token) {
+        String subject = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
+
+        return UUID.fromString(subject);
     }
 
     //validate token
     public boolean validateToken(String token){
         try {
-            extractEmail(token);
+            extractUserId(token);
             return true;
         } catch (Exception e) {
             return false;

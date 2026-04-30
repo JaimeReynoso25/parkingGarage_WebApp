@@ -12,15 +12,18 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
-                // Disable CSRF for testing APIs (Postman doesn't send CSRF tokens)
                 .csrf(csrf -> csrf.disable())
 
-                // Define which endpoints are public vs protected
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll() // ✅ allow register/login
-                        .requestMatchers("/user/**").permitAll() // ✅ allow register/login
-                        .anyRequest().authenticated()            // 🔒 everything else protected
-                );
+                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/user/**").permitAll()
+                        .requestMatchers("/vehicle/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+
+                // 🔥 ADD THESE
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable());
 
         return http.build();
     }

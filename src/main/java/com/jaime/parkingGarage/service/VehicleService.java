@@ -1,11 +1,12 @@
 package com.jaime.parkingGarage.service;
 
-import com.jaime.parkingGarage.config.JwtUtil;
 import com.jaime.parkingGarage.model.entity.User;
 import com.jaime.parkingGarage.model.entity.Vehicle;
 import com.jaime.parkingGarage.repository.UserRepository;
 import com.jaime.parkingGarage.repository.VehicleRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 public class VehicleService {
@@ -19,25 +20,32 @@ public class VehicleService {
         this.userRepository = userRepository;
     }
 
-    public String registerCar(String email, String licensePlate, String vehicleType) {
+    public Vehicle registerCar(UUID userId, String licencePlate, String vehicleType) {
 
         // checks if both fields have data
-        if (licensePlate == null || licensePlate.isBlank() || vehicleType == null || vehicleType.isBlank()){
-            return "Please enter both fields";
+        if (licencePlate == null || licencePlate.isBlank() || vehicleType == null || vehicleType.isBlank()){
+            throw new IllegalArgumentException("Please enter both fields");
         }
 
-        // check if license plate already exists
-        if (vehicleRepository.existsByLicensePlate(licensePlate)) {
-            return "License plate already exists, please use a unique license plate";
+        // check if licence plate already exists
+        if (vehicleRepository.existsBylicencePlate(licencePlate)) {
+            throw new IllegalArgumentException("licence plate already exists, please use a unique licence plate");
         }
 
         //Find user in database by email
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // creates a new vehicle in the table
-        vehicleRepository.save(new Vehicle(user, licensePlate, vehicleType));
-
-        return "Vehicle registered successfully";
+        return vehicleRepository.save(new Vehicle(user, licencePlate, vehicleType));
     }
+
+    public void deleteVehicle(UUID userId, String licencePlate){
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        vehicleRepository.deleteBylicencePlateAndUser_Id(licencePlate, user.getId());
+    }
+
 }

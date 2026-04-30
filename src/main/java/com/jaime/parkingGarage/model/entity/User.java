@@ -20,7 +20,8 @@ public class User {
 
     @Id
     @GeneratedValue // auto-generates the primary key
-    private UUID id;
+    @Column(name = "user_id")
+    private UUID userId;
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -34,11 +35,11 @@ public class User {
     //getters and setters
 
     public UUID getId() {
-        return id;
+        return userId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {

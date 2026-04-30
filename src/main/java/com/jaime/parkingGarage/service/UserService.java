@@ -5,6 +5,7 @@ import com.jaime.parkingGarage.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 // marks this as a service layer
@@ -18,43 +19,46 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public String registerUser(String email, String password){
+    public User registerUser(String email, String password){
 
         // checks if both fields have data
         if(email == null || password == null || email.isEmpty() || password.isEmpty()) {
-            return "Please enter both fields.";
+            throw new IllegalArgumentException("Please enter both fields.");
         }
 
         //checks if it is in valid email format
         if (!validateEmail(email)) {
-            return "Please enter a valid email";
+            throw new IllegalArgumentException("Please enter a valid email");
         }
 
         //checks if email already exists
         if (userRepository.existsByEmail(email)) {
-            return "Email already exists";
+            throw new IllegalArgumentException("Email already exists");
         }
 
         //creates a new user
-        userRepository.save(new User(email, password));
+        return userRepository.save(new User(email, password));
 
-        return "User registered successfully"; // Added a return statement for successful registration
     }
 
-    public boolean authenticateUser(String email, String password){
+    public Optional<User> authenticateUser(String email, String password){
 
         //finds user by email
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         // if no user is found, login fails
         if (userOptional.isEmpty()) {
-            return false;
+            return Optional.empty();
         }
 
         User user = userOptional.get();
 
-        //checks password
-        return user.getPassword().equals(password);
+        // if password is not correct, return empty
+        if (!user.getPassword().equals(password)){
+            return Optional.empty();
+        }
+
+        return Optional.of(user);
     }
 
     private boolean validateEmail(String email) {
@@ -66,10 +70,10 @@ public class UserService {
                     .matches();
     }
 
-    public User addFunds(String email, double addedfunds){
+    public User addFunds(UUID id, double addedfunds){
 
         //Find user in database by email
-        User user = userRepository.findByEmail(email)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // add funds to user

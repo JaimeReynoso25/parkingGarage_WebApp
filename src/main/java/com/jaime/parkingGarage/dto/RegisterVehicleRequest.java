@@ -2,14 +2,15 @@ package com.jaime.parkingGarage.dto;
 
 public class RegisterVehicleRequest {
 
-    public RegisterVehicleRequest(String vehicleType, String licensePlate){
-        this.vehicleType = vehicleType;
-        this.licensePlate = licensePlate;
+    public RegisterVehicleRequest() {}
 
+    public RegisterVehicleRequest(String vehicleType, String licencePlate){
+        this.vehicleType = vehicleType;
+        this.licencePlate = licencePlate;
     }
 
     private String vehicleType;
-    private String licensePlate;
+    private String licencePlate;
 
     public String getVehicleType() {
         return vehicleType;
@@ -19,11 +20,11 @@ public class RegisterVehicleRequest {
         this.vehicleType = vehicleType;
     }
 
-    public String getLicensePlate() {
-        return licensePlate;
+    public String getLicencePlate() {
+        return licencePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
 }

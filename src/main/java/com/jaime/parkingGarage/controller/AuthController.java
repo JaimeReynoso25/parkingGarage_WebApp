@@ -3,11 +3,14 @@ package com.jaime.parkingGarage.controller;
 import com.jaime.parkingGarage.config.JwtUtil;
 import com.jaime.parkingGarage.dto.LoginRequest;
 import com.jaime.parkingGarage.dto.RegisterRequest;
+import com.jaime.parkingGarage.model.entity.User;
 import com.jaime.parkingGarage.service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/auth")
@@ -24,7 +27,7 @@ public class AuthController {
 
     //registers a user
     @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
+    public User register(@RequestBody RegisterRequest request) {
         return userService.registerUser(
                 request.getEmail(),
                 request.getPassword()
@@ -35,16 +38,15 @@ public class AuthController {
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
 
-        boolean authenticated = userService.authenticateUser(
+        Optional<User> userOptional = userService.authenticateUser(
                 request.getEmail(),
                 request.getPassword()
         );
 
-        if (authenticated) {
-            //generate JWT using email and returns it
-            String token = jwtUtil.generateToken(request.getEmail());
-            return token;
+        if (userOptional.isPresent()) {
+            return jwtUtil.generateToken(userOptional.get().getId());
         }
+
         return "Invalid email or password";
     }
 }

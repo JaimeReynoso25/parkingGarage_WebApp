@@ -11,9 +11,9 @@ public class Vehicle {
     public Vehicle() {
     }
 
-    public Vehicle(User user, String license_plate, String vehicleType) {
+    public Vehicle(User user, String licencePlate, String vehicleType) {
         this.user = user;
-        this.licensePlate = licensePlate;
+        this.licencePlate = licencePlate;
         this.vehicleType = vehicleType;
     }
 
@@ -25,8 +25,8 @@ public class Vehicle {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @Column(name = "license_plate", unique = true, nullable = false)
-    private String licensePlate;
+    @Column(name = "licence_plate", unique = true, nullable = false)
+    private String licencePlate;
 
     @Column(name = "vehicle_type", nullable = false)
     private String vehicleType;
@@ -49,12 +49,14 @@ public class Vehicle {
         this.user = user;
     }
 
-    public String getLicensePlate() {
-        return licensePlate;
+    public String getLicencePlate() {
+        return licencePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
+
+
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
 
     public String getVehicleType() {
@@ -65,4 +67,3 @@ public class Vehicle {
         this.vehicleType = vehicleType;
     }
 }
-
